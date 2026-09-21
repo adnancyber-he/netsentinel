@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/adnancyber-he/netsentinel/blob/main/README.md
+    about: Read the README first — it covers setup, usage and FAQ
+  - name: Discussions
+    url: https://github.com/adnancyber-he/netsentinel/discussions
+    about: Ask questions or discuss ideas with the community
+  - name: Security issue
+    url: https://github.com/adnancyber-he/netsentinel/security/advisories/new
+    about: Report a security vulnerability privately (do NOT open a public issue)
