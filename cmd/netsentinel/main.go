@@ -31,6 +31,7 @@ func main() {
 		Short: "A cross-platform packet sniffer & traffic analyzer",
 		RunE:  run,
 	}
+	
 
 	root.Flags().StringVarP(&flagIface, "interface", "i", "", "Interface to capture on")
 	root.Flags().StringVarP(&flagFilter, "filter", "f", "", "BPF filter")
@@ -101,7 +102,16 @@ func run(cmd *cobra.Command, args []string) error {
 		return dash.Run()
 	}
 
-	// Headless: wait until interrupt, then write report
+	// Headless: wait until interrupt, then write reports
 	<-sigCh
-	return report.WriteJSON(flagOutDir, flagIface, *stats, flows.Snapshot(), alerts.Snapshot())
+	flowsSnap := flows.Snapshot()
+	alertsSnap := alerts.Snapshot()
+
+	if err := report.WriteJSON(flagOutDir, flagIface, *stats, flowsSnap, alertsSnap); err != nil {
+	    log.Printf("json report: %v", err)
+	}
+	if err := report.WriteHTML(flagOutDir, flagIface, *stats, flowsSnap, alertsSnap); err != nil {
+    	log.Printf("html report: %v", err)
+	}
+	return nil
 }
