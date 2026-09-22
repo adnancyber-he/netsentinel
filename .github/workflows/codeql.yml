@@ -29,7 +29,7 @@ jobs:
         include:
           - language: go
             os: ubuntu-latest
-            build-mode: autobuild
+            build-mode: manual
 
     steps:
       - name: Checkout repository
@@ -49,15 +49,13 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
-          # Use the extended query suite for deeper analysis.
-          # Swap to "security-extended" for security-only, or
-          # "security-and-quality" for the full set.
           queries: security-and-quality
           config: |
             paths-ignore:
               - "**/*_test.go"
               - "docs/**"
               - "scripts/**"
+              - "configs/**"
             paths:
               - "cmd/**"
               - "internal/**"
